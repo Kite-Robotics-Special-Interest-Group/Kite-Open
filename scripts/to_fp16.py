@@ -14,52 +14,21 @@ from __future__ import annotations
 
 import argparse
 import json
-import shutil
 import sys
 from pathlib import Path
 
-WEIGHT_FILE = "model.safetensors"
-COPY_SUFFIXES: tuple[str, ...] = (".py", ".json", ".txt", ".model", ".md")
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+
+from kite.models.weight_io import (  # noqa: E402
+    WEIGHT_FILE,
+    copy_assets,
+    load_weights,
+    read_dtypes,
+    read_shapes,
+    save_weights,
+)
+
 KEEP_FP32_HINTS: tuple[str, ...] = ("norm", "layernorm", "pos_emb", "soft_prompt")
-
-
-def read_shapes(weight_path: Path) -> dict[str, tuple[int, ...]]:
-    """只读 header 获取键与形状（不加载张量）。"""
-    from safetensors import safe_open
-
-    with safe_open(str(weight_path), framework="pt") as handle:
-        return {key: tuple(handle.get_slice(key).get_shape()) for key in handle.keys()}
-
-
-def read_dtypes(weight_path: Path) -> dict[str, str]:
-    """只读 header 获取每个张量的 dtype 字符串。"""
-    from safetensors import safe_open
-
-    with safe_open(str(weight_path), framework="pt") as handle:
-        return {key: str(handle.get_slice(key).get_dtype()) for key in handle.keys()}
-
-
-def load_weights(weight_path: Path) -> dict:
-    from safetensors.torch import load_file
-
-    return load_file(str(weight_path))
-
-
-def save_weights(state: dict, out_path: Path) -> None:
-    from safetensors.torch import save_file
-
-    save_file(state, str(out_path), metadata={"format": "pt"})
-
-
-def copy_assets(model_dir: Path, out_dir: Path) -> list[str]:
-    copied: list[str] = []
-    for path in sorted(model_dir.iterdir()):
-        if path.is_dir() or path.name.startswith(".") or path.name == WEIGHT_FILE:
-            continue
-        if path.suffix in COPY_SUFFIXES:
-            shutil.copy2(path, out_dir / path.name)
-            copied.append(path.name)
-    return copied
 
 
 def to_fp16(state: dict, keep_fp32_hints: bool) -> tuple[dict, list[str]]:

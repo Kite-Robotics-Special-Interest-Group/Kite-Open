@@ -40,6 +40,20 @@ cd Kite
 **权重不随 Git 下载**：`model.safetensors`（3.36 GB）通过网盘获取，
 按 `weights/README.md` 放到 `weights/X-VLA-WidowX/` 并用 `SHA256SUMS.txt` 校验。
 
+### 1.1 WSL2 与 Docker（Windows 必读）
+
+> **Windows 上的 Docker Desktop 默认以 WSL2 为后端**：装 Docker 之前先执行 `wsl --install`，Docker 会自动创建自己的发行版。
+> 所以 **WSL2 是「用 Docker」的前置条件**；**「可选」的是进入 Ubuntu 手动装 Python / 跑脚本**（工具只支持 Linux 或想与板端命令一致时才需要）。
+
+导出 ONNX、跑 Linux 脚本、或与板端保持一致时，建议用 **WSL**（Windows 里的 Ubuntu）。
+从零安装、文件位置、代理、常见报错见组织文档
+**[WSL 入门](https://github.com/Kite-Robotics-Special-Interest-Group/.github/blob/main/docs/wsl.md)**。
+三条最容易踩的：
+
+- 新装 Ubuntu 常缺 `python3-venv` / `python3-pip` → `sudo apt install -y python3-pip python3-venv`
+- WSL 里**不能**直接用 Windows 的 `127.0.0.1:7897` 代理 → 用宿主 IP 或 Win11 镜像网络
+- 工程放 `/mnt/d/...` 方便编辑，但**编译/大量读写放 `~/` 更快**
+
 ## 2. 创建虚拟环境（必做）
 
 虚拟环境把本项目的依赖和系统里的其他 Python 隔离，避免版本互相污染。
@@ -90,6 +104,8 @@ python -c "import torch; print(torch.__version__, torch.cuda.is_available())"
 ```
 
 ### 3.3 安装其余依赖
+
+> 需要与团队容器**完全一致**的版本时：`pip install -r requirements.lock`（由 `kite-dev` 镜像内 `pip freeze` 生成）。
 
 ```bash
 pip install -r requirements.txt

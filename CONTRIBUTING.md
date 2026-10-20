@@ -9,10 +9,18 @@
 > **重要前提**：本仓库是**免费版私有仓库**，GitHub 不提供分支保护（Rulesets）→ 平台不会拦住任何直推 `main` 的行为。
 > 因此下面所有纪律**只能靠人执行**，请严格遵守，并在 Review 时互相提醒。
 
-## 0. 一句话流程
+## 0. 流程总览
 
-```
-挂 Issue → 领 Issue + 建分支 → 提交 → push → 提 PR → Review → Squash 合并 → 删分支 + 同步 main
+```mermaid
+flowchart LR
+    I["挂 Issue"] --> C["领 Issue<br/>Assignees 选自己"]
+    C --> B["建分支<br/>类型/编号-简述"]
+    B --> D["开发 + 自测"]
+    D --> P["推送 + 提 PR<br/>Closes #编号"]
+    P --> R{"Review<br/>≥1 Approve 且 CI 绿勾"}
+    R -- "通过" --> M["Squash and merge"]
+    R -- "需修改" --> D
+    M --> X["删分支 + 同步 main"]
 ```
 
 ## 1. 前置准备（每人一次）

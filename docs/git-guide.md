@@ -53,12 +53,12 @@ git clone https://github.com/Kite-Robotics-Special-Interest-Group/Kite-Open.git
 
 ## 2. 核心概念（一张图）
 
-```
-工作区(你的文件)  --git add-->  暂存区  --git commit-->  本地仓库(.git)
-                                                            |
-                                              git push      | git pull
-                                                            v
-                                                     远程仓库 (GitHub)
+```mermaid
+flowchart LR
+    W["工作区<br/>你的文件"] -- "git add" --> S["暂存区<br/>index"]
+    S -- "git commit" --> L["本地仓库<br/>.git"]
+    L -- "git push" --> R["远程仓库<br/>GitHub"]
+    R -- "git pull" --> W
 ```
 
 - **commit**：一次本地存档，只存在于你自己电脑

@@ -52,7 +52,7 @@ wandb/
 outputs/
 *.log
 
-# ---- 本地机器状态笔记（不进仓库，团队任务见 todo.md）----
+# ---- 本地机器状态笔记（不进仓库，团队任务见 docs/status.md）----
 LOCAL_NOTES.md
 
 # ---- IDE / 系统 ----

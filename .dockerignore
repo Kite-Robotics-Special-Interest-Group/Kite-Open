@@ -1,0 +1,23 @@
+# 构建上下文排除项：权重与产物都很大，且不应进入镜像
+.git
+.gitattributes
+.github
+weights
+data
+datasets
+outputs
+logs
+*.hmm
+*.hmms
+*.safetensors
+*.pt
+*.pth
+*.onnx
+*.onnx.data
+*.npy
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+LOCAL_NOTES.md

@@ -1,0 +1,37 @@
+# Kite 基础依赖（pip install -r requirements.txt）
+# 想在任意设备上复现同一环境：直接用仓库根目录的 Dockerfile（见 docs/container.md）
+# PyTorch 的安装见 docs/setup.md（GPU 版本需按 CUDA 版本单独安装）
+
+# ---- 基础 ----
+numpy>=1.24
+pyyaml>=6.0
+tqdm>=4.66
+
+# ---- 模型与训练 ----
+torch>=2.2
+torchvision>=0.17
+
+# ---- X-VLA 模型运行（remote code 固定 transformers 版本，且会直接 import 下面这些）----
+transformers==4.51.3
+accelerate
+safetensors
+timm
+einops
+pillow
+huggingface_hub
+opencv-python-headless    # modeling_xvla.py 里 import cv2
+json-numpy                # modeling_xvla.py 里 import json_numpy
+fastapi                   # modeling_xvla.py 里 import fastapi（服务端代码，模块级导入）
+uvicorn                   # 同上
+
+# ---- ONNX 导出与静态图检查（scripts/export_onnx_fp16.py，量化前置步骤）----
+onnx>=1.16                # torch.onnx.export 的 legacy 导出器
+onnxconverter-common      # 导出后 fp32 → fp16 转换
+# onnxscript               # torch 2.9+ 默认的 dynamo 导出器（与 onnx 二者装其一）
+
+# 不放在 requirements 里；llama.cpp 可选：scripts/build_llamacpp_aarch64.sh
+# llama-cpp-python
+# openvino>=2024.0
+
+# ---- 开发工具 ----
+pytest>=8.0

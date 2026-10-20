@@ -1,0 +1,9 @@
+services:
+  kite-open:
+    build: .
+    image: kite-open:latest
+    working_dir: /kite
+    volumes:
+      - ./:/kite
+      - ./outputs:/kite/outputs
+    command: ["python", "-m", "pytest", "-q"]

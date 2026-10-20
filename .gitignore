@@ -1,0 +1,63 @@
+# ---- Python ----
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+.venv/
+venv/
+env/
+
+# ---- 环境与工具缓存 ----
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+
+# ---- 模型权重（体积大、变化少：不进 Git，通过网盘分发，见 weights/README.md）----
+weights/**/model.safetensors
+*.pt
+*.pth
+*.ckpt
+*.safetensors
+*.onnx
+*.bin
+*.gguf
+*.tflite
+*.npz
+*.onnx.data
+onnx__*
+
+*.hmm
+*.hmms
+
+# ---- 本地生成的量化 / 导出产物（网盘分发，不进 Git）----
+weights/X-VLA-WidowX-fused/
+weights/X-VLA-WidowX-fp16/
+weights/onnx-fp16/
+
+# ---- 数据集（不进 Git）----
+data/
+datasets/
+*.h5
+*.hdf5
+*.parquet
+*.arrow
+
+# ---- 日志与输出 ----
+logs/
+runs/
+wandb/
+outputs/
+*.log
+
+# ---- 本地机器状态笔记（不进仓库，团队任务见 todo.md）----
+LOCAL_NOTES.md
+
+# ---- IDE / 系统 ----
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+.VSCodeCounter/
